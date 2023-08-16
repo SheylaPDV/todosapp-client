@@ -1,14 +1,20 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Axios from "axios";
+import { Tooltip } from "react-tooltip";
+import "react-tooltip/dist/react-tooltip.css";
 
 interface Task {
   descripcion: string;
+  dateCreated: Date;
 }
 
 export default function Form() {
   const [task, setTask] = useState<Task>({
     descripcion: "",
+    dateCreated: new Date(),
   });
+
+  const [tasksList, setTasksList] = useState<Task[]>([]);
 
   // const handleChange = (
   //   e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
@@ -25,12 +31,26 @@ export default function Form() {
       descripcion: task.descripcion,
     })
       .then(() => {
-        alert("Task created");
+        console.log("Task created");
       })
       .catch((error) => {
         console.error("Error al guardar la tarea:", error);
       });
   };
+
+  const getTasks = (): void => {
+    Axios.get("http://localhost:3001/v1/tasks")
+      .then((res) => {
+        setTasksList(res.data);
+      })
+      .catch((error) => {
+        console.error("Error al guardar la tarea:", error);
+      });
+  };
+
+  useEffect(() => {
+    getTasks();
+  }, [saveTask]);
 
   // const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
   //   e.preventDefault();
@@ -62,6 +82,19 @@ export default function Form() {
             Add Task
           </button>
         </form>
+        <div className='form-group mb-3'>
+          {tasksList.map((val, key) => {
+            return (
+              <a
+                data-tooltip-id='my-tooltip'
+                data-tooltip-content={val.dateCreated.toLocaleString()}
+              >
+                <div key={key}>{val.descripcion}</div>
+              </a>
+            );
+          })}{" "}
+          <Tooltip id='my-tooltip' />
+        </div>
       </div>
     </div>
   );
