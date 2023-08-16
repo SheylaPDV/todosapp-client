@@ -42,14 +42,14 @@ export default function Form() {
               cols={30}
               rows={10}
             ></textarea>
-          </div>
+          </div>{" "}
+          <input className='form-control' placeholder='Filter'></input>
           <button
             type='submit'
             className='btn btn-outline-success btn-sm btn-block'
           >
             Add Task
           </button>
-          <input placeholder='Filter'></input>
         </form>
       </div>
     </div>
