@@ -1,24 +1,20 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import "./App.css";
+import Form from "./components/form/Form";
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div className='container py-5'>
+      <h3>To-Do App</h3>
+      <div className='content-app '>
+        <div className='row '>
+          <div className='col-sm-12 col-md-4'>
+            <Form />
+          </div>
+          <div className='col-sm-12 col-md-8'>
+            {/* Listar las tareas aqui */}
+          </div>
+        </div>
+      </div>
     </div>
   );
 }
