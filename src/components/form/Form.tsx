@@ -89,7 +89,10 @@ export default function Form() {
                 data-tooltip-id='my-tooltip'
                 data-tooltip-content={val.dateCreated.toLocaleString()}
               >
-                <div key={key}>{val.descripcion}</div>
+                <div key={key}>
+                  <input type='checkbox' />
+                  {val.descripcion}
+                </div>
               </a>
             );
           })}{" "}
