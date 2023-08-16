@@ -1,0 +1,30 @@
+.title {
+  color: rgba(240, 255, 251, 0.809);
+  font-size: 30px;
+  margin: 30px;
+}
+
+.text-area {
+  background-color: rgba(13, 55, 41, 0.253);
+  color: rgb(255, 255, 255);
+  border: solid rgb(38, 151, 106) 1px;
+  width: 80%;
+  height: 90%;
+  resize: none;
+  text-decoration: none;
+}
+.text-area:hover {
+}
+.text-area-table {
+  margin-bottom: 50px;
+  margin-left: 50px;
+  margin-right: 50px;
+  margin-top: 0;
+
+  width: 80%;
+  height: 90%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+}
