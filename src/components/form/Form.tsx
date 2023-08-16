@@ -16,15 +16,15 @@ export default function Form() {
 
   const [tasksList, setTasksList] = useState<Task[]>([]);
 
-  // const handleChange = (
-  //   e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
-  // ) => {
-  //   const { name, value } = e.target;
-  //   setTask((prevTask) => ({
-  //     ...prevTask,
-  //     [name]: value,
-  //   }));
-  // };
+  const handleChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ): void => {
+    const { name, value } = e.target;
+    setTask((prevTask) => ({
+      ...prevTask,
+      [name]: value,
+    }));
+  };
 
   const saveTask = (): void => {
     Axios.post("http://localhost:3001/v1/tasks", {
@@ -64,9 +64,7 @@ export default function Form() {
         <form action=''>
           <div className='form-group mb-3'>
             <input
-              onChange={(e) =>
-                setTask({ ...task, descripcion: e.target.value })
-              }
+              onChange={(e) => handleChange(e)}
               name='descripcion'
               placeholder='Task content'
               className='form-control'
