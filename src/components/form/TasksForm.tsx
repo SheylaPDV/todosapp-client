@@ -21,6 +21,8 @@ export default function TasksForm() {
   // Status for the task list
   const [tasksList, setTasksList] = useState<Task[]>([]);
 
+  const [filter, setFilter] = useState<string>("");
+
   // Function to handle the change in input fields
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
@@ -31,6 +33,9 @@ export default function TasksForm() {
       [name]: value,
     }));
   };
+  const filteredTasks = tasksList.filter((task) =>
+    task.descripcion.toLowerCase().includes(filter.toLowerCase())
+  );
 
   // Function to save a new task on the server
   const saveTask = (newTask: Task): void => {
@@ -76,7 +81,13 @@ export default function TasksForm() {
               value={task.descripcion}
             />
           </div>
-          <input className='form-control mb-' placeholder='Filter' />
+          <input
+            className='form-control mb-'
+            placeholder='Filter'
+            value={filter} // Step 3: Bind filter value to input
+            onChange={(e) => setFilter(e.target.value)}
+          />
+
           <button
             onClick={() => saveTask(task)}
             type='button'
@@ -85,7 +96,7 @@ export default function TasksForm() {
             Add Task
           </button>
         </form>
-        <TasksList tasks={tasksList} />
+        <TasksList tasks={filteredTasks} />
       </div>
     </div>
   );
