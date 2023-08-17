@@ -1,5 +1,5 @@
 import "./App.css";
-import Form from "./components/form/Form";
+import TasksForm from "./components/form/TasksForm";
 
 function App() {
   // LLamada al api
@@ -9,7 +9,7 @@ function App() {
       <h3>To-Dos App</h3>
       <div className='content-app '>
         <div className='col-sm-12 col-md-6'>
-          <Form />
+          <TasksForm />
         </div>
       </div>
     </div>

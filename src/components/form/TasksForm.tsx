@@ -2,16 +2,18 @@ import React, { useEffect, useState } from "react";
 import Axios from "axios";
 import { Tooltip } from "react-tooltip";
 import "react-tooltip/dist/react-tooltip.css";
+import ListGroup from "../list/ListGroup";
+import Tasks from "../tasks/Tasks";
 
 interface Task {
   descripcion: string;
-  dateCreated: Date;
+  dateCreated: number;
 }
 
 export default function Form() {
   const [task, setTask] = useState<Task>({
     descripcion: "",
-    dateCreated: new Date(),
+    dateCreated: 0,
   });
 
   const [tasksList, setTasksList] = useState<Task[]>([]);
@@ -52,11 +54,6 @@ export default function Form() {
     getTasks();
   }, [saveTask]);
 
-  // const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-  //   e.preventDefault();
-  //   saveTask(task.descripcion);
-  // };
-
   return (
     <div className='card'>
       <div className='card-header'>Add Task</div>
@@ -80,21 +77,24 @@ export default function Form() {
             Add Task
           </button>
         </form>
-        <div className='form-group mb-3'>
-          {tasksList.map((val, key) => {
-            return (
-              <a
-                data-tooltip-id='my-tooltip'
-                data-tooltip-content={val.dateCreated.toLocaleString()}
-              >
-                <div key={key}>
-                  <input type='checkbox' />
-                  {val.descripcion}
-                </div>
-              </a>
-            );
-          })}{" "}
-          <Tooltip id='my-tooltip' />
+        <div className='col-sm-12 col-md-12'>
+          {tasksList ? (
+            <ListGroup>
+              {tasksList.map((task, index) => (
+                <a
+                  data-tooltip-id='my-tooltip'
+                  data-tooltip-content={new Date(
+                    task.dateCreated
+                  ).toLocaleString()}
+                >
+                  <Tasks key={index} descripcion={task.descripcion} />
+                </a>
+              ))}
+              <Tooltip id='my-tooltip' />
+            </ListGroup>
+          ) : (
+            <h3>There is nothing to show</h3>
+          )}
         </div>
       </div>
     </div>
