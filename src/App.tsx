@@ -2,8 +2,6 @@ import "./App.css";
 import TasksForm from "./components/form/TasksForm";
 
 function App() {
-  // LLamada al api
-
   return (
     <div className='container py-5'>
       <h3>To-Dos App</h3>
