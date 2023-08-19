@@ -11,17 +11,17 @@ interface Task {
 
 // Main component
 export default function TasksForm() {
+  // Status for the task list
+  const [tasksList, setTasksList] = useState<Task[]>([]);
+
+  const [filter, setFilter] = useState<string>("");
+
   // Status for the current task
   const [task, setTask] = useState<Task>({
     id: 0,
     descripcion: "",
     dateCreated: Date.now(),
   });
-
-  // Status for the task list
-  const [tasksList, setTasksList] = useState<Task[]>([]);
-
-  const [filter, setFilter] = useState<string>("");
 
   // Function to handle the change in input fields
   const handleChange = (
@@ -37,6 +37,17 @@ export default function TasksForm() {
     task.descripcion.toLowerCase().includes(filter.toLowerCase())
   );
 
+  // Function to obtain the list of tasks from the server
+  const getTasks = (): void => {
+    Axios.get("http://localhost:3001/v1/tasks")
+      .then((res) => {
+        setTasksList(res.data);
+      })
+      .catch((error) => {
+        console.error("Error when loading tasks:", error);
+      });
+  };
+
   // Function to save a new task on the server
   const saveTask = (newTask: Task): void => {
     Axios.post("http://localhost:3001/v1/tasks", {
@@ -50,28 +61,22 @@ export default function TasksForm() {
       });
   };
 
-  // Function to obtain the list of tasks from the server
-  const getTasks = (): void => {
-    Axios.get("http://localhost:3001/v1/tasks")
-      .then((res) => {
-        setTasksList(res.data);
-      })
-      .catch((error) => {
-        console.error("Error when loading tasks:", error);
-      });
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    saveTask(task);
   };
 
   // Effect to load the task list when the component is mounted or when a new task is added
   useEffect(() => {
     getTasks();
-  }, [saveTask]);
+  }, [tasksList]);
 
   // Renders the component
   return (
     <div className='card'>
       <div className='card-header'>Add Task</div>
       <div className='card-body'>
-        <form action=''>
+        <form onSubmit={handleSubmit} action=''>
           <div className='form-group mb-3'>
             <input
               onChange={(e) => handleChange(e)}
@@ -79,22 +84,21 @@ export default function TasksForm() {
               placeholder='Task content'
               className='form-control'
               value={task.descripcion}
-            />
+            />{" "}
+            <button
+              type='submit'
+              className='btn btn-outline-success btn-sm btn-block '
+            >
+              Add Task
+            </button>
           </div>
+
           <input
             className='form-control mb-'
             placeholder='Filter'
-            value={filter} // Step 3: Bind filter value to input
+            value={filter}
             onChange={(e) => setFilter(e.target.value)}
           />
-
-          <button
-            onClick={() => saveTask(task)}
-            type='button'
-            className='btn btn-outline-success btn-sm btn-block '
-          >
-            Add Task
-          </button>
         </form>
         <TasksList tasks={filteredTasks} />
       </div>

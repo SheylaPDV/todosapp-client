@@ -1,5 +1,5 @@
 import Axios from "axios";
-import React from "react";
+import React, { useState } from "react";
 import { Tooltip } from "react-tooltip";
 import TasksForm from "./TasksForm";
 
@@ -17,6 +17,14 @@ const TasksList: React.FC<Props> = ({ tasks }) => {
   // Function to delete a task
   const deleteTask = (id: number): void => {
     Axios.delete(`http://localhost:3001/v1/tasks/${id}`)
+      .then(() => {})
+      .catch((err: string) => {
+        console.log(err);
+      });
+  };
+
+  const updateTask = (id: number): void => {
+    Axios.put(`http://localhost:3001/v1/tasks/${id}`)
       .then(() => {})
       .catch((err: string) => {
         console.log(err);
@@ -53,7 +61,7 @@ const TasksList: React.FC<Props> = ({ tasks }) => {
           <Tooltip id='my-tooltip' />
         </>
       ) : (
-        <h3>There is nothing to show</h3>
+        <h5>There is nothing to show</h5>
       )}
     </div>
   );
