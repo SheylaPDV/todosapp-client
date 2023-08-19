@@ -71,7 +71,7 @@ export default function TasksForm() {
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    saveTask(task);
+    saveTask(task); // Save the new task when submitting the form
   };
 
   // Effect to load the task list when the component is mounted or when a new task is added

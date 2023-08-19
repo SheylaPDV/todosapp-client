@@ -24,6 +24,7 @@ const TasksList: React.FC<Props> = ({ tasks, setTaskState }) => {
       });
   };
 
+  // Function to update a task in the database
   const updateTask = (id: number, completed: boolean): void => {
     Axios.put(`http://localhost:3001/v1/tasks/${id}`, { completed: completed })
       .then(() => {})
@@ -32,11 +33,12 @@ const TasksList: React.FC<Props> = ({ tasks, setTaskState }) => {
       });
   };
 
+  // Function to change the completed status of a task
   const toggleDoneTask = (i: number, completed: boolean): void => {
     const updatedTasks = [...tasks];
     updatedTasks[i].completed = completed;
     setTaskState(updatedTasks[i]);
-    updateTask(updatedTasks[i].id, completed);
+    updateTask(updatedTasks[i].id, completed); // Calls the function to update the task in the database
   };
 
   return (
