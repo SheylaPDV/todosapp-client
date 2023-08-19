@@ -7,6 +7,7 @@ interface Task {
   id: number;
   descripcion: string;
   dateCreated: number;
+  completed: boolean;
 }
 
 // Main component
@@ -21,6 +22,7 @@ export default function TasksForm() {
     id: 0,
     descripcion: "",
     dateCreated: Date.now(),
+    completed: false,
   });
 
   // Function to handle the change in input fields
@@ -55,6 +57,12 @@ export default function TasksForm() {
     })
       .then(() => {
         console.log("Task created");
+        setTask({
+          id: 0,
+          descripcion: "",
+          dateCreated: Date.now(),
+          completed: false,
+        });
       })
       .catch((error) => {
         console.error("Error when saving the task:", error);
@@ -69,7 +77,7 @@ export default function TasksForm() {
   // Effect to load the task list when the component is mounted or when a new task is added
   useEffect(() => {
     getTasks();
-  }, [tasksList]);
+  }, [tasksList, filteredTasks]);
 
   // Renders the component
   return (
@@ -100,7 +108,7 @@ export default function TasksForm() {
             onChange={(e) => setFilter(e.target.value)}
           />
         </form>
-        <TasksList tasks={filteredTasks} />
+        <TasksList setTaskState={setTask} tasks={filteredTasks} />
       </div>
     </div>
   );
