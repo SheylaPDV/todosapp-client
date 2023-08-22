@@ -1,17 +1,10 @@
 import React, { useEffect, useState } from "react";
 import Axios from "axios";
 import TasksList from "./TasksList";
-
-// Defines the shape of a task object
-interface Task {
-  id: number;
-  descripcion: string;
-  dateCreated: number;
-  completed: boolean;
-}
+import { Task } from "./Interfaces";
 
 // Main component
-export default function TasksForm() {
+function TasksForm() {
   // Status for the task list
   const [tasksList, setTasksList] = useState<Task[]>([]);
 
@@ -35,6 +28,8 @@ export default function TasksForm() {
       [name]: value,
     }));
   };
+
+  // Filters
   const filteredTasks = tasksList.filter((task) =>
     task.descripcion.toLowerCase().includes(filter.toLowerCase())
   );
@@ -77,7 +72,7 @@ export default function TasksForm() {
   // Effect to load the task list when the component is mounted or when a new task is added
   useEffect(() => {
     getTasks();
-  }, [tasksList, filteredTasks]);
+  }, [tasksList, filteredTasks, task]);
 
   // Renders the component
   return (
@@ -113,3 +108,5 @@ export default function TasksForm() {
     </div>
   );
 }
+
+export default TasksForm;

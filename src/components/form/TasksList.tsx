@@ -1,20 +1,10 @@
 import Axios from "axios";
 import React from "react";
 import { Tooltip } from "react-tooltip";
+import { Props, Task } from "./Interfaces";
 
-interface Task {
-  id: number;
-  descripcion: string;
-  dateCreated: number;
-  completed: boolean;
-}
-
-interface Props {
-  tasks: Task[];
-  setTaskState: React.Dispatch<React.SetStateAction<Task>>;
-}
-
-const TasksList: React.FC<Props> = ({ tasks, setTaskState }) => {
+// Component
+function TasksList(props: Props): JSX.Element {
   // Function to delete a task
   const deleteTask = (id: number): void => {
     Axios.delete(`http://localhost:3001/v1/tasks/${id}`)
@@ -35,17 +25,17 @@ const TasksList: React.FC<Props> = ({ tasks, setTaskState }) => {
 
   // Function to change the completed status of a task
   const toggleDoneTask = (i: number, completed: boolean): void => {
-    const updatedTasks = [...tasks];
+    const updatedTasks = [...props.tasks];
     updatedTasks[i].completed = completed;
-    setTaskState(updatedTasks[i]);
+    props.setTaskState(updatedTasks[i]);
     updateTask(updatedTasks[i].id, completed); // Calls the function to update the task in the database
   };
 
   return (
     <div className='col-sm-12 col-md-12'>
-      {tasks.length ? (
+      {props.tasks.length ? (
         <>
-          {tasks.map((task: Task, i: number) => (
+          {props.tasks.map((task: Task, i: number) => (
             <a
               key={task.id}
               data-tooltip-id='my-tooltip'
@@ -62,6 +52,7 @@ const TasksList: React.FC<Props> = ({ tasks, setTaskState }) => {
                   <input
                     type='checkbox'
                     onChange={() => toggleDoneTask(i, true)}
+                    checked={false}
                   />
                 )}
                 <div
@@ -93,6 +84,6 @@ const TasksList: React.FC<Props> = ({ tasks, setTaskState }) => {
       )}
     </div>
   );
-};
+}
 
 export default TasksList;
