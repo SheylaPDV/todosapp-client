@@ -1,5 +1,4 @@
 import Axios from "axios";
-import React from "react";
 import { Tooltip } from "react-tooltip";
 import { Props, Task } from "./Interfaces";
 
@@ -32,16 +31,17 @@ function TasksList(props: Props): JSX.Element {
   };
 
   return (
-    <div className='col-sm-12 col-md-12'>
+    <div className='col-sm-12 col-md-12 '>
       {props.tasks.length ? (
         <>
           {props.tasks.map((task: Task, i: number) => (
             <a
               key={task.id}
               data-tooltip-id='my-tooltip'
-              data-tooltip-content={new Date(task.dateCreated).toLocaleString()}
-            >
-              <li className='list-group-item d-flex justify-content-between align-items-start'>
+              data-tooltip-content={new Date(
+                task.dateCreated
+              ).toLocaleString()}>
+              <li className='list-group-item d-flex justify-content-between align-items-start bg-dark text-light'>
                 {task.completed ? (
                   <input
                     type='checkbox'
@@ -59,8 +59,7 @@ function TasksList(props: Props): JSX.Element {
                   style={{
                     textDecoration: task.completed ? "line-through" : "",
                   }}
-                  className='ms-3 me-auto'
-                >
+                  className='ms-3 me-auto'>
                   {task.descripcion}
                 </div>
 
@@ -69,8 +68,7 @@ function TasksList(props: Props): JSX.Element {
                     onClick={() => {
                       deleteTask(task.id);
                     }}
-                    className='btn btn-danger btn-sm'
-                  >
+                    className='btn btn-danger btn-sm'>
                     Delete
                   </button>
                 </div>

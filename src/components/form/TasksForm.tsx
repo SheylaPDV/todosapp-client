@@ -64,40 +64,51 @@ function TasksForm() {
       });
   };
 
+  // Save the new task when submitting the form
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    saveTask(task); // Save the new task when submitting the form
+    saveTask(task);
   };
 
   // Effect to load the task list when the component is mounted or when a new task is added
   useEffect(() => {
     getTasks();
-  }, [tasksList, filteredTasks, task]);
+  }, [filteredTasks]);
 
   // Renders the component
   return (
-    <div className='card'>
-      <div className='card-header'>Add Task</div>
+    <div className='card bg-dark'>
+      <div className='card-header text-info'>Add Task</div>
       <div className='card-body'>
         <form onSubmit={handleSubmit} action=''>
           <div className='form-group mb-3'>
-            <input
-              onChange={(e) => handleChange(e)}
-              name='descripcion'
-              placeholder='Task content'
-              className='form-control'
-              value={task.descripcion}
-            />{" "}
+            <div className='input-group input-group-sm mb-3 '>
+              <span
+                className='input-group-text bg-dark text-info'
+                id='inputGroup-sizing-default'>
+                Description
+              </span>
+              <input
+                onChange={(e) => handleChange(e)}
+                name='descripcion'
+                placeholder='Task content'
+                value={task.descripcion}
+                type='text'
+                className='form-control bg-dark'
+                aria-label='Sizing example input'
+                aria-describedby='inputGroup-sizing-default'
+              />
+            </div>
+
             <button
               type='submit'
-              className='btn btn-outline-success btn-sm btn-block '
-            >
+              className='btn btn-outline-success btn-sm btn-block '>
               Add Task
             </button>
           </div>
 
           <input
-            className='form-control mb-'
+            className='form-control mb-3 bg-dark'
             placeholder='Filter'
             value={filter}
             onChange={(e) => setFilter(e.target.value)}
